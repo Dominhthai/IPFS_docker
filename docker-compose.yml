@@ -1,0 +1,37 @@
+services:
+  ipfs-node1:
+    image: ipfs/go-ipfs:latest
+    container_name: ipfs-node1
+    environment:
+      - IPFS_SWARM_KEY_FILE=/data/swarm.key
+      - IPFS_PATH=/data/ipfs
+    ports:
+      - 4001:4001
+      - 5001:5001
+      - 8080:8080 
+    volumes:
+      - ./ipfs-node1-data:/data/ipfs
+      - ./ipfs-node1-staging:/export
+    command: ["daemon", "--migrate=true"]
+
+  ipfs-node2:
+    image: ipfs/go-ipfs:latest
+    container_name: ipfs-node2
+    environment:
+      - IPFS_SWARM_KEY_FILE=/data/swarm.key
+    ports:
+      - 4002:4002
+      - 5002:5002
+      - 8081:8081 
+    volumes:
+      - ./ipfs-node2-data:/data/ipfs
+      - ./ipfs-node2-staging:/export
+    command: ["daemon", "--migrate=true"]
+
+volumes:
+  ipfs-node1-data:
+  ipfs-node1-staging:
+  ipfs-node2-data:
+  ipfs-node2-staging:
+
+
